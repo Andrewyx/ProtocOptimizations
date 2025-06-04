@@ -1,0 +1,16 @@
+build --enable_runfiles
+common --enable_bzlmod
+common --enable_platform_specific_config
+common --noincompatible_disallow_empty_glob
+common --incompatible_disallow_struct_provider_syntax=false
+common --verbose_failures
+common --sandbox_debug
+build --noincompatible_disallow_ctx_resolve_tools
+
+
+# Ensure that we don't accidentally build protobuf or gRPC
+build --incompatible_enable_proto_toolchain_resolution # protoc caching
+#common --per_file_copt=external/.*protobuf.*@--PROTOBUF_WAS_NOT_SUPPOSED_TO_BE_BUILT
+#common --host_per_file_copt=external/.*protobuf.*@--PROTOBUF_WAS_NOT_SUPPOSED_TO_BE_BUILT
+#common --per_file_copt=external/.*grpc.*@--GRPC_WAS_NOT_SUPPOSED_TO_BE_BUILT
+#common --host_per_file_copt=external/.*grpc.*@--GRPC_WAS_NOT_SUPPOSED_TO_BE_BUILT

@@ -1,0 +1,6 @@
+.clwb
+bazel-bin
+bazel-nanopb_test
+bazel-out
+bazel-testlogs
+.idea/

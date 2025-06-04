@@ -1,0 +1,8 @@
+syntax = "proto3";
+import "nanopb.proto";
+
+message Angles
+{
+  string name = 1;
+  float radians = 2;
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+import "nanopb.proto";
+
+message Geometry
+{
+  enum GeometryType
+  {
+    TYPE_2014 = 0;
+    TYPE_2018 = 1;
+  }
+  enum Division
+  {
+    A = 0;
+    B = 1;
+  }
+  string name = 1;
+  repeated float points = 2 [(nanopb).max_count = 20];
+}
