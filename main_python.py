@@ -1,10 +1,16 @@
 # from google.protobuf.json_format import MessageToJson
-import test_pb2  # This is the generated Python proto module
-
+import test_pb2 as test  # This is the generated Python proto module
+import test_subdir.subdir_test_pb2 as subdir_test
 def main():
     # Create a Geometry message
-    geometry = test_pb2.Geometry()
+    geometry = test.Geometry()
+    geometry.name = "geo"
+    angle = subdir_test.Angles()
 
+    angle.name = "testing"
+    angle.radians = 5.6
+    print(angle)
+    print(geometry)
     # Set some values
     # geometry.points.extend([1.0, 2.0, 3.0])
     #

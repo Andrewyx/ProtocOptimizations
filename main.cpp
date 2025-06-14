@@ -1,7 +1,7 @@
 // #include "test.pb.h" // Include the generated nanopb header
 #include "nano_test_pb/test.pb.h" // Include the generated nanopb header
 // #include ""
-#include "test_subdir/subdir_test.pb.h"
+// #include "test_subdir/subdir_test.pb.h"
 #include <iostream>
 
 int main() {
