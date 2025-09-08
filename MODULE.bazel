@@ -8,48 +8,18 @@
 bazel_dep(name = "nanopb", version = "0.4.9.1")
 bazel_dep(name = "rules_python", version = "1.3.0")
 bazel_dep(name = "protobuf", version = "31.1")
-bazel_dep(name = "toolchains_protoc", version = "0.4.2")
 bazel_dep(name = "rules_proto", version = "7.1.0")
+bazel_dep(name = "platformio_rules", repo_name = "platformio_rules")
 
-# This is overridden despite being in BCR since it contains protoc v31.1. We can remove this once BCR updates
+#python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+#python.toolchain(
+#    is_default = True,
+#    python_version = "3.12",
+#)
+
 archive_override(
-    module_name = "toolchains_protoc",
-    sha256 = "a6724c54d38825cb750933f33883e1649f7a7d88bb37f0be225bc2dd7e9a8b0a",
-    strip_prefix = "toolchains_protoc-e1700f0230462d089ef79c4ca8f2ecf8df2d6354",
-    url = "https://github.com/aspect-build/toolchains_protoc/archive/e1700f0230462d089ef79c4ca8f2ecf8df2d6354.tar.gz",
+    module_name = "platformio_rules",
+    sha256 = "a80357230e27b8b57b8deffaa82684d3ee88b2284e4a767a9d8a692e9034e125",
+    strip_prefix = "platformio_rules-3cd18c7c7bb2482fe3cbb58898245dd675421234",
+    url = "https://github.com/mum4k/platformio_rules/archive/3cd18c7c7bb2482fe3cbb58898245dd675421234.tar.gz",
 )
-
-python = use_extension("@rules_python//python/extensions:python.bzl", "python")
-
-#python.defaults(python_version = "3.12")
-python.toolchain(
-    is_default = True,
-    python_version = "3.12",
-)
-
-pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
-pip.parse(
-    hub_name = "protoc_deps",
-    python_version = "3.12",
-    requirements_lock = "//toolchains:requirements_lock.txt",
-)
-use_repo(pip, "protoc_deps")
-
-# Configure proto compiler optimization
-protoc = use_extension("@toolchains_protoc//protoc:extensions.bzl", "protoc")
-protoc.toolchain(
-    google_protobuf = "com_google_protobuf",
-    version = "v31.1",
-)
-use_repo(protoc, "com_google_protobuf", "toolchains_protoc_hub")
-
-register_toolchains("@toolchains_protoc_hub//:all")
-
-# NB: the `:all` here is critical, because `proto_lang_toolchain` expands into two targets:
-# - proto_lang_toolchain rule [name]
-# - toolchain rule [name]_toolchain
-# and the second one is valid for registration.
-# Attempting to register a proto_lang_toolchain rule as a toolchain gives a baffling error like
-# Misconfigured toolchains: //tools:protoc_java_toolchain is declared as a toolchain but has inappropriate dependencies.
-# Declared toolchains should be created with the 'toolchain' rule and should not have dependencies that themselves require toolchains.
-register_toolchains("//toolchains:all")
