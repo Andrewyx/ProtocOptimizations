@@ -6,10 +6,6 @@
 #include "pb_decode.h"
 #include "pb_encode.h"
 #include "proto/simple.pb.h"
-extern "C"
-{
-#include "proto/simple.nanopb.h"
-}
 
 
 template <typename T>
